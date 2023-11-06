@@ -55,14 +55,15 @@ jobs:
         mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
     - name: Import CSV data
       run: |
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Access_Control.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Role.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Staff.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Role_Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Staff_Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Open_Position.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Application.csv
+        mysql --local-infile=1 -uroot -h127.0.0.1 -e "SET GLOBAL local_infile = true;"
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Access_Control.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Role.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Staff.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Role_Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Staff_Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Open_Position.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${MYSQL_PWD} -h127.0.0.1 HR_Portal db/sample_data/Application.csv
     - name: Run unittest
       env:
         MYSQL_USER: root
