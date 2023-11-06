@@ -17,7 +17,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }} # Updated to use the secret
           MYSQL_DATABASE: 'HR Portal'
         ports:
           - 3306:3306
@@ -45,25 +45,25 @@ jobs:
           echo 'waiting for mysqld to be connectable...'
           sleep 2
         done
-    - name: Create actual database
-      env:
-        MYSQL_PWD: root
-      run: mysql -uroot -h127.0.0.1 --execute=
     - name: Create actual database and tables from SQL file
-      env:
-        MYSQL_PWD: root
       run: |
-        mysql -uroot -h127.0.0.1 < db/import.sql
+        mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 < db/import.sql
+    - name: Verify if tables were created
+      env:
+        MYSQL_PWD: ${{ secrets.DB_PASSWORD }}
+      run: |
+        mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
     - name: Import CSV data
       run: |
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/access_control.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/staff.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/role.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/open_position.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/staff_skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/role_skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/application.csv
+        mysql --local-infile=1 -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SET GLOBAL local_infile = true;"
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Access_Control.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Role.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Role_Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff_Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Open_Position.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Application.csv
 
     - name: Run tests
       env:
