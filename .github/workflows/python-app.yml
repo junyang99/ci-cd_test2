@@ -7,22 +7,27 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
+      # Setting up a MySQL service
       mysql:
-        image: mysql:5.7
+        image: mysql:5.7 # Or use the version of MySQL you need
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: 'HR Portal'
         ports:
           - 3306:3306
-        options: --health-cmd='mysqladmin ping' --health-interval=10s --health-timeout=5s --health-retries=5
+        # Set health checks to wait until mysql has started
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
-
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'
+        python-version: '3.8' # Choose your Python version
 
     - name: Install dependencies
       run: |
