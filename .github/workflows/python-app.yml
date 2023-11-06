@@ -48,11 +48,11 @@ jobs:
     - name: Create actual database
       env:
         MYSQL_PWD: root
-      run: mysql -uroot -h127.0.0.1 --execute="CREATE DATABASE IF NOT EXISTS \`HR_Portal\`;"
+      run: mysql -uroot -h127.0.0.1 --execute="CREATE DATABASE IF NOT EXISTS \`HR Portal\`;"
     - name: Import database schema
       env:
         MYSQL_PWD: root
-      run: mysql -h 127.0.0.1 -P 3306 -u root -proot -D 'HR Portal' -e "SELECT * FROM your_table;"
+      run: mysql -h 127.0.0.1 -P 3306 -u root -proot -D 'HR Portal' -e "SELECT * FROM HR Portal;"
     - name: Import CSV data
       run: |
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/access_control.csv
