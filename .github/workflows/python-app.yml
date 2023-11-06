@@ -35,35 +35,33 @@ jobs:
         pip install flake8 pytest
         pip install flask_testing
         if [ -f requirement.txt ]; then pip install -r requirement.txt; fi
-
+        
     - name: Wait for MySQL
       run: |
         until mysqladmin ping -h 127.0.0.1 -P 3306 --silent; do
           echo 'waiting for mysqld to be connectable...'
           sleep 2
         done
-    - name: Create actual database and tables from SQL file
-      run: |
-        mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 < db/import.sql
-    - name: Verify if tables were created
+    - name: Create actual database
       env:
-        MYSQL_PWD: ${{ secrets.DB_PASSWORD }}
+        MYSQL_PWD: root
+      run: mysql -uroot -h127.0.0.1 --execute=
+    - name: Create actual database and tables from SQL file
+      env:
+        MYSQL_PWD: root
       run: |
-        mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
-   
+        mysql -uroot -h127.0.0.1 < db/import.sql
     - name: Import CSV data
       run: |
-        mysql --local-infile=1 -uroot -p$DB_PASSWORD -h mysql -e "SET GLOBAL local_infile = true;"
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Access_Control.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Role.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Staff.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Role_Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Staff_Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Open_Position.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p$DB_PASSWORD -h mysql "HR Portal" db/sample_data/Application.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/access_control.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/staff.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/role.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/open_position.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/staff_skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/role_skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/application.csv
 
-        
     - name: Run tests
       env:
         DATABASE_URL: mysql+mysqlconnector://root:root@127.0.0.1:3306/HR Portal
