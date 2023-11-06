@@ -45,10 +45,20 @@ jobs:
           echo 'waiting for mysqld to be connectable...'
           sleep 2
         done
-    - name: Run migrations or setup test database
+    - name: Create actual database
+      run: mysql -uroot -proot -h127.0.0.1 --execute="CREATE DATABASE IF NOT EXISTS \`HR Portal\`;"
+    - name: Import database schema
+      run: mysql -uroot -proot -h127.0.0.1 \`HR Portal\` < db/import.sql
+    - name: Import CSV data
       run: |
-        # Add your database setup commands here, e.g.,:
-        # mysql -uroot -proot -h127.0.0.1 --execute="CREATE DATABASE IF NOT EXISTS \`HR Portal\`;"
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/access_control.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/staff.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/role.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/open_position.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/staff_skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/role_skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/application.csv
     - name: Run unittest
       env:
         MYSQL_USER: root
