@@ -56,14 +56,14 @@ jobs:
         mysql -uroot -h127.0.0.1 < db/import.sql
     - name: Import CSV data
       run: |
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/access_control.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/staff.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/role.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/open_position.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/staff_skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/role_skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -proot -h127.0.0.1 \`HR Portal\` db/sample_data/application.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/access_control.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/staff.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/role.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/open_position.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/staff_skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/role_skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -h127.0.0.1 'HR Portal' db/sample_data/application.csv
     - name: Run unittest
       env:
         MYSQL_USER: root
