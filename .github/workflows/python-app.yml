@@ -1,85 +1,142 @@
-name: Python application tests with database
+name: Flask CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     services:
+      # Setting up a MySQL service
       mysql:
-        image: mysql:5.7
+        image: mysql:5.7 # Or use the version of MySQL you need
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }} # Updated to use the secret
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: 'HR Portal'
         ports:
           - 3306:3306
+        # Set health checks to wait until mysql has started
         options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -P 3306 --silent"
-          --health-interval=10s
-          --health-timeout=10s
-          --health-retries=5
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: "3.10"
+        python-version: '3.8' # Choose your Python version
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
         pip install flask_testing
         if [ -f requirement.txt ]; then pip install -r requirement.txt; fi
-    - name: Wait for MySQL
-      run: |
-        until mysqladmin ping -h 127.0.0.1 -P 3306 --silent; do
-          echo 'waiting for mysqld to be connectable...'
-          sleep 2
-        done
-    - name: Create actual database and tables from SQL file
-      run: |
-        mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 < db/import.sql
-    - name: Verify if tables were created
+
+    # Set up your database (MySQL) URL
+    - name: Set up test database
       env:
-        MYSQL_PWD: ${{ secrets.DB_PASSWORD }}
-      run: |
-        mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
-    - name: Import CSV data
-      run: |
-        mysql --local-infile=1 -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SET GLOBAL local_infile = true;"
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Access_Control.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Role.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Role_Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff_Skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Open_Position.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Application.csv
-    - name: Run unittest
-      env:
-        MYSQL_USER: root
-        MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        MYSQL_HOST: localhost
-        MYSQL_PORT: 3306
+        MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: 'HR Portal'
-        DATABASE_URL: mysql+mysqlconnector://root:${{ secrets.DB_PASSWORD }}@localhost:3306/'HR Portal'
       run: |
-        # export MYSQL_USER=root
-        # export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
-        # export MYSQL_HOST=localhost
-        # export MYSQL_PORT=3306
-        # export MYSQL_DATABASE='HR Portal'
-        # mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SELECT * FROM Role;" -D "HR Portal" --table
-        python -m unittest discover -s ./utils -p '*_test.py'
+        # Configure the database connection string
+        # For example, for a Flask SQLAlchemy app:
+        echo "SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:root@localhost:3306/'HR Portal'" > .env.test
+        # If you have any schema setup or migrations, run them here
+        # flask db upgrade
+
+    - name: Run tests
+      env:
+        DATABASE_URL: mysql+pymysql://root:root@localhost:3306/'HR Portal'
+      run: |
+        # If you have a script to run your tests, execute it here
+        # Otherwise, run tests directly
+         python -m unittest discover -s ./utils -p '*_test.py'
+
+# name: Python application tests with database
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# permissions:
+#   contents: read
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     services:
+#       mysql:
+#         image: mysql:5.7
+#         env:
+#           MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }} # Updated to use the secret
+#           MYSQL_DATABASE: 'HR Portal'
+#         ports:
+#           - 3306:3306
+#         options: >-
+#           --health-cmd="mysqladmin ping -h 127.0.0.1 -P 3306 --silent"
+#           --health-interval=10s
+#           --health-timeout=10s
+#           --health-retries=5
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Set up Python 3.10
+#       uses: actions/setup-python@v3
+#       with:
+#         python-version: "3.10"
+#     - name: Install dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install flake8 pytest
+#         pip install flask_testing
+#         if [ -f requirement.txt ]; then pip install -r requirement.txt; fi
+#     - name: Wait for MySQL
+#       run: |
+#         until mysqladmin ping -h 127.0.0.1 -P 3306 --silent; do
+#           echo 'waiting for mysqld to be connectable...'
+#           sleep 2
+#         done
+#     - name: Create actual database and tables from SQL file
+#       run: |
+#         mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 < db/import.sql
+#     - name: Verify if tables were created
+#       env:
+#         MYSQL_PWD: ${{ secrets.DB_PASSWORD }}
+#       run: |
+#         mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
+#     - name: Import CSV data
+#       run: |
+#         mysql --local-infile=1 -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SET GLOBAL local_infile = true;"
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Access_Control.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Role.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Skill.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Role_Skill.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff_Skill.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Open_Position.csv
+#         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Application.csv
+#     - name: Run unittest
+#       env:
+#         MYSQL_USER: root
+#         MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+#         MYSQL_HOST: localhost
+#         MYSQL_PORT: 3306
+#         MYSQL_DATABASE: 'HR Portal'
+#         DATABASE_URL: mysql+mysqlconnector://root:${{ secrets.DB_PASSWORD }}@localhost:3306/'HR Portal'
+#       run: |
+#         # export MYSQL_USER=root
+#         # export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
+#         # export MYSQL_HOST=localhost
+#         # export MYSQL_PORT=3306
+#         # export MYSQL_DATABASE='HR Portal'
+#         # mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SELECT * FROM Role;" -D "HR Portal" --table
+#         python -m unittest discover -s ./utils -p '*_test.py'
 
 
 # name: Python application tests with database
