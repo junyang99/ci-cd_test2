@@ -52,7 +52,7 @@ jobs:
       env:
         MYSQL_PWD: ${{ secrets.DB_PASSWORD }}
       run: |
-        mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN 'HR Portal';" --verbose
+        mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
     - name: Import CSV data
       run: |
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/access_control.csv
