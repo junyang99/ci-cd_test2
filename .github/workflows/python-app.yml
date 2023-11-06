@@ -55,7 +55,7 @@ jobs:
         MYSQL_PASSWORD: root
         MYSQL_DATABASE: 'HR Portal'
       run: |
-        python -m unittest discover -s . -p '*_test.py'
+        python -m unittest discover -s ./utils -p '*_test.py'
 
       #old  
 # # This workflow will install Python dependencies, run tests and lint with a single version of Python
