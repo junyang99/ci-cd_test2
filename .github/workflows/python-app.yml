@@ -64,10 +64,6 @@ jobs:
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Staff_Skill.csv
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Open_Position.csv
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 "HR Portal" db/sample_data/Application.csv
-        
-    - name: Additional MySQL readiness check
-      run: |
-        mysql -h "mysql" -u root -p"${{ secrets.DB_PASSWORD }}" --execute="SELECT 1"
 
     - name: Run tests
       env:
