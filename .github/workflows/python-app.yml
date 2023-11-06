@@ -45,7 +45,6 @@ jobs:
       env:
         MYSQL_PWD: root
       run: |
-        mysql -uroot -h mysql --execute="CREATE DATABASE IF NOT EXISTS \`HR Portal\`; USE \`HR Portal\`;"
         mysql -uroot -h mysql \`HR Portal\` < db/import.sql
 
     - name: Import CSV data
