@@ -73,7 +73,9 @@ jobs:
         export MYSQL_USER=root
         export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
         export MYSQL_DATABASE=HR_Portal
+        mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SELECT * FROM Role;" -D "HR Portal" --table
         python -m unittest discover -s ./utils -p '*_test.py'
+
 
 # name: Python application tests with database
 
