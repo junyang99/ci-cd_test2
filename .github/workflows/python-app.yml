@@ -61,7 +61,7 @@ jobs:
 
     - name: Run tests
       env:
-        DATABASE_URL: "mysql+mysqlconnector://root:root@mysql:3306/\`HR Portal\`"
+        DATABASE_URL: "mysql+mysqlconnector://root:root@mysql:3306/`HR Portal`"
       run: |
         python -m unittest discover -s ./utils -p '*_test.py'
 
