@@ -71,6 +71,7 @@ jobs:
         MYSQL_HOST: localhost
         MYSQL_PORT: 3306
         MYSQL_DATABASE: 'HR Portal'
+        DATABASE_URL: mysql+mysqlconnector://root:${{ secrets.DB_PASSWORD }}@localhost:3306/'HR Portal'
       run: |
         # export MYSQL_USER=root
         # export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
