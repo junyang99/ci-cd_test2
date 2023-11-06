@@ -38,19 +38,18 @@ jobs:
 
     - name: Wait for MySQL
       run: |
-        until mysqladmin ping -h"127.0.0.1" -P"3306" --silent; do
-          sleep 1
+        until mysqladmin ping -h 127.0.0.1 -P 3306 --silent; do
+          echo 'waiting for mysqld to be connectable...'
+          sleep 2
         done
-
     - name: Create actual database and tables from SQL file
       run: |
         mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 < db/import.sql
-    
     - name: Verify if tables were created
       env:
         MYSQL_PWD: ${{ secrets.DB_PASSWORD }}
       run: |
-        mysql -uroot -h mysql --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
+        mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
    
     - name: Import CSV data
       run: |
