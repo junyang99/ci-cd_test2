@@ -1,0 +1,27 @@
+#login-icon {
+    height: 120px; 
+    width: auto;
+    color: rgba(0, 0, 0, 0.73);
+}
+
+.login-input {
+    width: 40%;
+    font-family: 'display-regular';
+    padding-top: 100px;
+}
+
+.login-btn {
+    background-color: var(--staff-actions);    
+    font-family: 'display-bold';
+    color: var(--default-white);
+    text-align: center;
+    width: 100%;
+    /* outline: 1px solid #CCD2D7; */
+
+    margin-top: 20px;
+}
+
+.login-btn:hover {
+    background-color: #FF7A30;
+    color: var(--default-white);
+}

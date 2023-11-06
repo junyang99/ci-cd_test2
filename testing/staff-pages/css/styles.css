@@ -1,0 +1,82 @@
+/* GENERAL STYLES */
+
+body {
+    margin: 0;
+}
+
+@font-face {
+    font-family: 'text-regular';
+    src: url('../../assets/fonts/SF-Pro-Text-Regular.otf');
+}
+
+@font-face {
+    font-family: 'text-medium';
+    src: url('../../assets/fonts/SF-Pro-Text-Medium.otf');
+}
+
+@font-face {
+    font-family: 'text-bold';
+    src: url('../../assets/fonts/SF-Pro-Text-Bold.otf');
+}
+
+@font-face {
+    font-family: 'display-regular';
+    src: url('../../assets/fonts/SF-Pro-Display-Regular.otf');
+}
+
+@font-face {
+    font-family: 'display-semibold';
+    src: url('../../assets/fonts/SF-Pro-Display-Semibold.otf');
+}
+
+@font-face {
+    font-family: 'display-bold';
+    src: url('../../assets/fonts/SF-Pro-Display-Bold.otf');
+}
+
+:root {
+    --nav-background: rgba(0, 0, 0, 0.73);
+    --default-black: #000000;
+    --default-white: #FFFFFF;
+
+    --heading: #1D1D1F;
+    --subheading: #6E6E73;
+    --overall-deadline: #C94F4F;
+    --staff-actions: #FF7A30;
+    --overall-purple: #BC99FC;
+
+    --skills-green: #238823;
+    --skills-yellow: #FFC311;
+    --skills-red: #D2222D;
+    --skills-match: rgba(35, 136, 35, 0.5);
+    --skills-miss: rgba(201,79, 79, 0.5);
+
+    --application-heading: #007AFF;
+    --application-skills: rgba(0,122, 255, 0.25);
+    --application-submit: #4C2719;
+    --application-delete: #810101;
+
+    --table-header: #6B7280;
+    --table-data: #111827;
+    --table-outline: #D9D9D9;
+    --status-pending: #FFC311;
+    --status-accepted: #238823;
+    --status-rejected: #D2222D;
+    
+    --hr-actions: #FF3864;
+}
+
+/* GENERAL PAGE  */
+.page-heading {
+    font-family: display-semibold;
+    color: var(--heading);
+    font-size: 48px;
+    margin-bottom: 0;
+}
+
+.page-subheading {
+    font-family: display-semibold;
+    color: var(--subheading);
+    font-size: 35px;
+    margin-bottom: 0;
+}

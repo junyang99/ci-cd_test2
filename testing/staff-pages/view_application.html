@@ -1,0 +1,178 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Link to Bootstrap Library -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Link to FA icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- Link to Unicons Library -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+    <link rel="stylesheet" type="text/css" href="css/search.css">
+    <link rel="stylesheet" type="text/css" href="css/filter.css">
+    <link rel="stylesheet" type="text/css" href="css/overall_listing.css">
+    <link rel="stylesheet" type="text/css" href="css/role_listing.css">
+    <link rel="stylesheet" type="text/css" href="css/overall_application.css">
+    <link rel="stylesheet" type="text/css" href="css/view_application.css">
+
+</head>
+<body style="background-color: #F5F5F7;">
+    <header>
+        <nav>
+            <ul style="margin-bottom: 0;">
+                <li> <img src="../assets/logo.png" class="logo"> </li>
+                <li class="nav-link"> <a href="#"> Role Listing </a> </li>
+                <li class="nav-link"> <a href="#"> My Applications </a> </li>
+                <li class="nav-link"> <a href="#"> My Profile </a> </li>
+
+                <div id="nav-user">
+                    <li id="nav-user"> <img src="../assets/icons/user.png" style="height: 40px; width: auto;"> </li>
+                    <li id="nav-user"> 
+                        <div> Alice Tan </div>
+                        <div> Staff </div> 
+                    </li>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <div style="padding: 35px;">
+        <div class="container ms-auto">
+
+            <div class="row">
+                <div class="col">
+                    <div id="back-group">
+                        <img src="../assets/icons/back.png">
+                        <p id="back-text">Back to My Applications</p>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end col right-align-btn">
+                    <button class="application-btn" style="background-color: var(--staff-actions);">
+                        <img src="../assets/icons/edit.svg">
+                        <p>EDIT</p>
+                    </button>
+
+                    <button class="application-btn" style="background-color: var(--application-delete);">
+                        <img src="../assets/icons/delete.svg">
+                        <p>DELETE</p>
+                    </button>
+                </div>
+            </div>
+
+            <br><br>
+
+            <p class="header-btn">Submitted Application</p>
+            
+            <br><br>
+
+            <p class="page-heading">Account Manager.</p>
+            <p class="page-subheading">Sales Department</p>
+        </div>
+
+        <div class="container ms-auto">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="staff_id">Staff ID:</label>
+                        <input type="text" name="staff_id" id="staff_id" disabled placeholder="000123">
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="staff_name">Staff Name:</label>
+                        <input type="text" name="staff_name" id="staff_name" disabled placeholder="Alice Tan">
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="text" name="email" id="email" disabled placeholder="alice@gmail.com">
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" name="country" id="country" disabled placeholder="Singapore">
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="current_dept">Current Department:</label>
+                        <input type="text" name="current_dept" id="current_dept" disabled placeholder="Marketing">
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="current_role">Current Job Role:</label>
+                        <input type="text" name="current_role" id="current_role" disabled placeholder="Content Strategist">
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="cover_letter">Cover Letter (optional):</label>
+                        <textarea name="cover_letter" id="cover_letter" cols="30" rows="8" disabled></textarea>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="skills_profile">Skills Profile:</label>
+
+                        <div class="skills_profile">
+                            <div class="user_skill">Audit Frameworks</div>
+                            <div class="user_skill">Budgeting</div>
+                            <div class="user_skill">Business Acumen</div>
+                            <div class="user_skill">Audit Frameworks</div>
+                            <div class="user_skill">Budgeting</div>
+                            <div class="user_skill">Business Acumen</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <p class="status">Pending</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

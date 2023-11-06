@@ -1,0 +1,8 @@
+.application-btn {
+    background-color: var(--staff-actions);
+    width: fit-content;
+    margin-right: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}

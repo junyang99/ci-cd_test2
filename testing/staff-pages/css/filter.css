@@ -1,0 +1,111 @@
+/* FILTER */
+
+.container{
+    position: relative;
+    /* max-width: 320px; */
+    width: 100%;
+    margin: 30px;
+}
+
+.select-btn{
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #707070;
+    background-color: #fff;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
+    width: 235px;
+}
+
+.select-btn .btn-text{
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--subheading);
+}
+
+.select-btn .arrow-dwn{
+    display: flex;
+    height: 21px;
+    width: 21px;
+    color: var(--subheading);
+    font-size: 14px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.select-btn.open .arrow-dwn{
+    transform: rotate(-180deg);
+}
+
+.list-items{
+    position: absolute;
+    z-index: 1000;
+    margin-top: 15px;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
+    display: none;
+    /* max-width: 100%; */
+    width: auto;
+    /* min-width: 100%; */
+}
+
+.select-btn.open ~ .list-items{
+    display: block;
+}
+
+.list-items .item{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    height: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 0 15px;
+    border-radius: 8px;
+}
+
+/* .list-items .item:hover{
+    background-color: #e7edfe;
+} */
+
+.item .item-text{
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+
+.item .checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    margin-right: 12px;
+    border: 1.5px solid #c0c0c0;
+    transition: all 0.3s ease-in-out;
+}
+
+.item.checked .checkbox{
+    background-color: #4070f4;
+    border-color: #4070f4;
+}
+
+.checkbox .check-icon{
+    color: #fff;
+    font-size: 11px;
+    transform: scale(0);
+    transition: all 0.2s ease-in-out;
+}
+
+.item.checked .check-icon{
+    transform: scale(1);
+}

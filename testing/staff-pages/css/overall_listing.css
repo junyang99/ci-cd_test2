@@ -1,0 +1,65 @@
+/* OVERALL-LISTINGS: CARD */
+
+.listing-card {
+    background-color: var(--default-white);
+    border-radius: 18px;
+    padding: 45px 50px;
+    cursor: pointer;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-heading{
+    font-family: display-semibold;
+    color: var(--heading);
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+.card-subheading{
+    font-family: display-semibold;
+    color: var(--subheading);
+    font-size: 23px;
+    margin-bottom: 21px;
+}
+
+.card-deadline{
+    font-family: display-semibold;
+    color: var(--overall-deadline);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card-description{
+    font-family: text-regular;
+    color: var(--default-black);
+    font-size: 17px;
+    text-align: justify;
+    margin-bottom: 23px;
+}
+
+.card-find-btn{
+    background-color: var(--overall-purple);
+    font-family: text-regular;
+    color: var(--default-black);
+    font-size: 14px;
+    padding: 8px 13px;
+    border-radius: 980px;
+    margin-bottom: 0;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-right: 15px;
+}
+
+.card-apply-btn{
+    background-color: var(--staff-actions);
+    font-family: text-bold;
+    color: var(--default-white);
+    font-size: 14px;
+    padding: 8px 22px;
+    border-radius: 980px;
+    margin-bottom: 0;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
