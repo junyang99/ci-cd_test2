@@ -55,14 +55,14 @@ jobs:
         mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
     - name: Import CSV data
       run: |
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/access_control.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/staff.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/role.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/open_position.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/staff_skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/role_skill.csv
-        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/application.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Access_Control.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Staff.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Role.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Open_Position.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Staff_Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Role_Skill.csv
+        mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 'HR Portal' db/sample_data/Application.csv
     - name: Run unittest
       env:
         MYSQL_USER: root
