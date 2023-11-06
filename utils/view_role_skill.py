@@ -7,7 +7,13 @@ from sqlalchemy import ForeignKey
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/HR Portal'
+db_user = os.getenv('DB_USER', 'root')  # default to 'root' if not set
+db_pass = os.getenv('DB_PASSWORD', 'root')  # default to 'root' if not set
+db_host = os.getenv('DB_HOST', 'localhost')  # default to 'localhost' if not set
+db_name = os.getenv('DB_NAME', 'HR Portal')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{db_user}:{db_pass}@{db_host}:3306/{db_name}'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/HR Portal'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
