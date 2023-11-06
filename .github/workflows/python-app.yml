@@ -72,12 +72,11 @@ jobs:
         MYSQL_PORT: 3306
         MYSQL_DATABASE: 'HR Portal'
       run: |
-        export MYSQL_USER=root
-        export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
-        export MYSQL_HOST=localhost
-        export MYSQL_PORT=3306
-        export MYSQL_DATABASE='HR Portal'
-         run: python test_db_connection.py
+        # export MYSQL_USER=root
+        # export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
+        # export MYSQL_HOST=localhost
+        # export MYSQL_PORT=3306
+        # export MYSQL_DATABASE='HR Portal'
         # mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SELECT * FROM Role;" -D "HR Portal" --table
         python -m unittest discover -s ./utils -p '*_test.py'
 
