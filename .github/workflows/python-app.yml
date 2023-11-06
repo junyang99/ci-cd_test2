@@ -56,6 +56,8 @@ jobs:
         MYSQL_DATABASE: 'HR Portal'
       run: |
         python -m unittest discover -s ./utils -p '*_test.py'
+        working-directory: ${{github.workspace}}
+
 
       #old  
 # # This workflow will install Python dependencies, run tests and lint with a single version of Python
