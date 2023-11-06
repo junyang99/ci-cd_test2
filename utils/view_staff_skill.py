@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/HR Portal'
 #app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql://{os.environ['root']}:{os.environ['root']}@{os.environ['localhost:3306']}/{os.environ['HR Portal']}"
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql://{os.environ['MYSQL_ROOT_PASSWORD']}@localhost:3306/{os.environ['MYSQL_DATABASE']}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql://{os.environ['root']}@localhost:3306/{os.environ['HR Portal']}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
