@@ -72,7 +72,9 @@ jobs:
       run: |
         export MYSQL_USER=root
         export MYSQL_PASSWORD=${{ secrets.DB_PASSWORD }}
-        export MYSQL_DATABASE=HR Portal
+        MYSQL_HOST: 127.0.0.1  # Here, for the service to be accessed within GitHub Actions, localhost is correct
+        MYSQL_PORT: 3306
+        MYSQL_DATABASE: "HR Portal"
         mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 -e "SELECT * FROM Role;" -D "HR Portal" --table
         python -m unittest discover -s ./utils -p '*_test.py'
 
