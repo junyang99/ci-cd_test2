@@ -55,7 +55,7 @@ jobs:
         mysql -uroot -h127.0.0.1 --execute="SHOW TABLES IN \`HR Portal\`;" --verbose
     - name: Import CSV data
       run: |
-        mysql --local-infile=1 -u*** -p*** -h127.0.0.1 -e "SET GLOBAL local_infile = true;"
+        # mysql --local-infile=1 -u*** -p*** -h127.0.0.1 -e "SET GLOBAL local_infile = true;"
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Access_Control.csv
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Role.csv
         mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u*** -p*** -h127.0.0.1 'HR Portal' db/sample_data/Skill.csv
