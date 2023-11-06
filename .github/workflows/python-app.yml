@@ -44,7 +44,6 @@ jobs:
 
     - name: Create actual database and tables from SQL file
       run: |
-        mysql -uroot -p$DB_PASSWORD -h mysql < db/import.sql
         mysql -uroot -p${{ secrets.DB_PASSWORD }} -h127.0.0.1 < db/import.sql
     
     - name: Verify if tables were created
