@@ -69,7 +69,7 @@ jobs:
       env:
         DB_USER: 'root'
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_HOST: 'mysql'
+        DB_HOST: '127.0.0.1'
         DB_NAME: 'HR Portal'
         DATABASE_URL: "mysql+mysqlconnector://root:${{ secrets.DB_PASSWORD }}@mysql:3306/HR%20Portal"
       run: |
