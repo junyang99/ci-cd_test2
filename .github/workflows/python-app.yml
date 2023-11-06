@@ -46,7 +46,7 @@ jobs:
           sleep 2
         done
     - name: Create actual database
-      run: mysql -uroot -h127.0.0.1 \`HR_Portal\` < db/import.sql
+      run: mysql -uroot -proot -h127.0.0.1 --execute="CREATE DATABASE IF NOT EXISTS \`HR_Portal\`;"
     - name: Import database schema
       env:
         MYSQL_PWD: root
