@@ -8,15 +8,13 @@ from sqlalchemy import ForeignKey
 app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/HR Portal'
-# Use environment variables to configure the database URI
-db_user = os.environ.get('MYSQL_USER', 'root')  # Default to 'root' if not set
-db_password = os.environ.get('MYSQL_PASSWORD', 'root')  # Default to 'root' if not set
-db_host = os.environ.get('MYSQL_HOST', 'localhost')  # Default to 'localhost' if not set
-db_port = os.environ.get('MYSQL_PORT', '3306')  # Default to '3306' if not set
-db_name = os.environ.get('MYSQL_DATABASE', 'HR Portal')  # Default to 'HR_Portal' if not set
+db_user = os.getenv('DB_USER', 'root')  # default to 'root' if not set
+db_pass = os.getenv('DB_PASSWORD', 'root')  # default to 'root' if not set
+db_host = os.getenv('DB_HOST', '127.0.0.1')  # default to 'localhost' if not set
+db_name = os.getenv('DB_NAME', 'HR Portal')
 
-database_uri = os.getenv('DATABASE_URL', 'mysql+mysqlconnector://root:root@localhost:3306/HR Portal')
-app.config['SQLALCHEMY_DATABASE_URI'] = database_uri.replace("%20", " ")
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{db_user}:{db_pass}@{db_host}:3306/{db_name}'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost:3306/HR Portal'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
